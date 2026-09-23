@@ -1,0 +1,20 @@
+/**
+ * Represents the lifecycle state of a Sandbox.
+ */
+const SandboxState = {
+  CREATED: 'CREATED',
+  PREPARING: 'PREPARING',
+  STARTING: 'STARTING',
+  RUNNING: 'RUNNING',
+  COMPLETING: 'COMPLETING',
+  COMPLETED: 'COMPLETED',
+  CANCELLING: 'CANCELLING',
+  STOPPING: 'STOPPING',
+  TERMINATING: 'TERMINATING',
+  STOPPED: 'STOPPED',
+  FAILED: 'FAILED',
+  DESTROYING: 'DESTROYING',
+  DESTROYED: 'DESTROYED'
+};
+
+module.exports = SandboxState;

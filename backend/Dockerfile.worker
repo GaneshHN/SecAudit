@@ -1,0 +1,28 @@
+FROM node:20-alpine
+
+# Install Docker CLI for the worker to interact with the host's Docker daemon
+RUN apk add --no-cache docker-cli
+
+# Set non-root user (Note: Host must map docker.sock permissions to match 'node' user/group)
+USER node
+
+# Create app directory
+WORKDIR /home/node/app
+
+# Install dependencies
+COPY --chown=node:node package*.json ./
+RUN npm ci --only=production
+
+# Copy application files
+COPY --chown=node:node . .
+
+# Environment variables with safe defaults
+ENV NODE_ENV=production
+ENV WORKER_HEALTH_PORT=9090
+ENV WORKER_CONCURRENCY=2
+
+# Expose health probe port
+EXPOSE 9090
+
+# Start Worker daemon
+CMD ["node", "worker.js"]

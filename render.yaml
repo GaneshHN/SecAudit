@@ -1,0 +1,31 @@
+﻿# SecAudit — Render.com deployment config
+# Deploy the Node.js backend as a Web Service on Render
+
+services:
+  - type: web
+    name: secaudit-backend
+    runtime: node
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: node server.js
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: PERSISTENCE_PROVIDER
+        value: json
+      - key: ALLOWED_ORIGINS
+        # Replace with your actual Vercel frontend URL after deployment
+        value: https://your-project.vercel.app
+      - key: METRICS_ENABLED
+        value: true
+      - key: WORKER_CONCURRENCY
+        value: 2
+      - key: SHUTDOWN_TIMEOUT_MS
+        value: 30000
+      - key: READINESS_QUEUE_THRESHOLD
+        value: 0
+      - key: SANDBOX_REAPER_INTERVAL_MS
+        value: 900000

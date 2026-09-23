@@ -1,0 +1,24 @@
+FROM node:20-alpine
+
+# Set non-root user
+USER node
+
+# Create app directory
+WORKDIR /home/node/app
+
+# Install dependencies (copying package.json first for cache)
+COPY --chown=node:node package*.json ./
+RUN npm ci --only=production
+
+# Copy application files
+COPY --chown=node:node . .
+
+# Environment variables with safe defaults
+ENV NODE_ENV=production
+ENV PORT=5000
+
+# Expose API port
+EXPOSE 5000
+
+# Start API server
+CMD ["node", "server.js"]
